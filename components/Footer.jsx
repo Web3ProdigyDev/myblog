@@ -7,7 +7,7 @@ import {
   BsLinkedin,
   BsGithub,
 } from "react-icons/bs";
-import { AiOutlineCopyrightCircle } from "react-icons/ai";
+import { AiOutlineCopyrightCircle, AiOutlineFolderOpen } from "react-icons/ai";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -44,15 +44,37 @@ const Footer = () => {
           >
             <BsFacebook className="w-6 h-6 sm:w-7 sm:h-7 text-primaryColor/50 hover:text-primaryColor cursor-pointer" />
           </a>
-          <a
-            href="https://github.com/Web3ProdigyDev"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Visit Web3ProdigyDev's GitHub profile"
-            className="inline-block pointer-events-auto transform hover:scale-110 transition-transform duration-300"
-          >
-            <BsGithub className="w-6 h-6 sm:w-7 sm:h-7 text-primaryColor/50 hover:text-primaryColor cursor-pointer" />
-          </a>
+          <div className="relative group inline-block pointer-events-auto">
+            <a
+              href="https://github.com/Web3ProdigyDev"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Web3ProdigyDev's GitHub profile"
+              className="inline-block transform group-hover:scale-110 transition-transform duration-300"
+            >
+              <BsGithub className="w-6 h-6 sm:w-7 sm:h-7 text-primaryColor/50 group-hover:text-primaryColor cursor-pointer" />
+            </a>
+            <a
+              href="https://github.com/Web3ProdigyDev"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Web3ProdigyDev's GitHub profile"
+              className="absolute top-0 left-0 -translate-x-full -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-x-10 flex items-center justify-center w-10 h-10 rounded-full bg-mainBgColor text-textColor border border-primaryColor/30 shadow-sm hover:bg-secondaryColor hover:text-bgColor transition-all duration-300 pointer-events-auto focus:outline-none focus:ring-2 focus:ring-primaryColor"
+              tabIndex={0}
+            >
+              <BsGithub className="w-5 h-6 text-lg" />
+            </a>
+            <a
+              href="https://github.com/Web3ProdigyDev/myblog"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Web3ProdigyDev's project repository"
+              className="absolute top-0 right-0 translate-x-full -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-10 flex items-center justify-center w-10 h-10 rounded-full bg-mainBgColor text-textColor border border-primaryColor/30 shadow-sm hover:bg-secondaryColor hover:text-bgColor transition-all duration-300 pointer-events-auto focus:outline-none focus:ring-2 focus:ring-primaryColor"
+              tabIndex={0}
+            >
+              <AiOutlineFolderOpen className="w-5 h-5 text-lg" />
+            </a>
+          </div>
           <a
             href="https://www.linkedin.com/in/Web3ProdigyDev"
             target="_blank"
