@@ -4,28 +4,28 @@ import logoDark from "../public/images/logoDark.png";
 
 const Header = () => {
   return (
-    <div className="w-full h-20 border-b-[1px] border-b-primaryColor/20 font-titleFont sticky top-0 bg-bgColor z-50 px-4">
+    <div className="w-full h-20 border-b-[1px] border-b-primaryColor/30 bg-bgColor text-textColor font-titleFont sticky top-0 z-50 px-4 shadow-sm">
       <div className="max-w-7xl h-full mx-auto flex justify-between items-center">
         <Link href="/">
           <div>
-            <Image width={80} height={80} src={logoDark} alt="logoDark" />
+            <Image width={60} height={60} src={logoDark} alt="Web3ProdigyDev logo" className="object-contain" />
           </div>
         </Link>
         <nav>
-          <ul className="hidden lg:inline-flex gap-8 uppercase text-sm font-semibold text-textColor">
-            <li className="headerLi hover:text-secondaryColor transition-colors duration-300">
+          <ul className="hidden lg:inline-flex gap-8 uppercase text-sm font-semibold">
+            <li className="headerLi">
               <Link href="/">Home</Link>
             </li>
-            <li className="headerLi hover:text-secondaryColor transition-colors duration-300">
+            <li className="headerLi">
               <Link href="/posts">Posts</Link>
             </li>
-            <li className="headerLi hover:text-secondaryColor transition-colors duration-300">
+            <li className="headerLi">
               <Link href="/pages">Pages</Link>
             </li>
-            <li className="headerLi hover:text-secondaryColor transition-colors duration-300">
+            <li className="headerLi">
               <Link href="/features">Features</Link>
             </li>
-            <li className="headerLi hover:text-secondaryColor transition-colors duration-300">
+            <li className="headerLi">
               <Link href="/contact">Contact</Link>
             </li>
           </ul>

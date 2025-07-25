@@ -13,7 +13,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full py-12 bg-bgColor text-textColor px-4">
+    <footer className="w-full py-12 bg-bgColor text-textColor px-4 border-t-[1px] border-t-primaryColor/30 shadow-sm">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 justify-between items-center pointer-events-auto">
         <div className="flex flex-col sm:flex-row items-center gap-4">
           <Image src={logoLight} width={60} height={60} alt="Web3ProdigyDev logo" className="object-contain" />

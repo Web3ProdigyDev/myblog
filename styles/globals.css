@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --textColor: #d1d5db;
+    --secondaryColor: #8b5cf6;
+    --primaryColor: #e5e7eb;
+    --bgColor: #1f2937;
+    --mainBgColor: #111827;
+  }
+
+  html, body {
+    background-color: var(--mainBgColor);
+    color: var(--textColor);
+    min-height: 100vh;
+  }
+}
+
 @layer components {
   .headerLi {
     color: var(--textColor);
