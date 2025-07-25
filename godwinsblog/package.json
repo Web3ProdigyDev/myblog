@@ -1,0 +1,19 @@
+{
+  "name": "godwinsblog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "sanity dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@sanity/vision": "^4.1.1",
+    "sanity": "^4.1.1",
+    "styled-components": "^6.1.19"
+  }
+}
