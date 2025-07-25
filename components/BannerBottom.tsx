@@ -11,9 +11,9 @@ const BannerBottom = () => {
           My Blog
         </p>
         <h3 className="font-bold text-xl md:text-3xl">
-          Want to be successful in tech? Follow these tips!
+          Yooo!!! Welcome to my blog! Stay tuned for a few tips and hacks that will help you alot!
         </h3>
-        <p className="text-xs text-white/50">Godwin John/Over 2 month ago</p>
+        <p className="text-xs text-white/50">Web3ProdigyDev/Over 2 months ago</p>
       </div>
       <div className="w-full lg:w-[40%] flex items-center justify-center gap-2 lg:gap-8">
         <div className="w-full flex flex-col items-center group">
