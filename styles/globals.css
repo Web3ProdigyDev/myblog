@@ -4,6 +4,13 @@
 
 @layer components {
   .headerLi {
-    @apply text-primaryColor hover:text-secondaryColor cursor-pointer duration-300;
+    color: var(--textColor);
+    cursor: pointer;
+    transition-property: color;
+    transition-duration: 300ms;
+  }
+
+  .headerLi:hover {
+    color: var(--secondaryColor);
   }
 }
