@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import logoDark from "../public/images/logoDark.png";
+import profileImg from "../public/images/user.png";
 
 const Header = () => {
   return (
@@ -32,11 +33,17 @@ const Header = () => {
         </nav>
         <div className="flex items-center gap-8 text-lg text-textColor">
           <div className="flex items-center gap-1">
-            <img
-              className="w-8 h-8 rounded-full"
-              src="https://www.noormohammad.live/static/media/roundedProfile.477a194221d255c8ce26.png"
-              alt="profile"
-            />
+<div className="p-[2px] rounded-full border-[2px] border-primaryColor shadow-sm">
+  <Image
+    src={profileImg}
+    alt="profile"
+    width={40}
+    height={40}
+    className="rounded-full"
+  />
+</div>
+
+
             <p className="text-sm font-medium">Hello Stranger!</p>
           </div>
 
