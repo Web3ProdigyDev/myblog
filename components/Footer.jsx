@@ -22,11 +22,51 @@ const Footer = () => {
         </div>
 
         <div className="flex gap-6">
-          <BsYoutube className="w-6 h-6 text-white/50 hover:text-white duration-300 cursor-pointer" />
-          <BsFacebook className="w-6 h-6 text-white/50 hover:text-white duration-300 cursor-pointer" />
-          <BsGithub className="w-6 h-6 text-white/50 hover:text-white duration-300 cursor-pointer" />
-          <BsLinkedin className="w-6 h-6 text-white/50 hover:text-white duration-300 cursor-pointer" />
-          <BsTwitter className="w-6 h-6 text-white/50 hover:text-white duration-300 cursor-pointer" />
+          <a
+            href="https://www.youtube.com/@Web3ProdigyDev"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit Web3ProdigyDev YouTube"
+            className="inline-block"
+          >
+            <BsYoutube className="w-6 h-6 text-white/50 hover:text-white duration-300 cursor-pointer" />
+          </a>
+          <a
+            href="https://www.facebook.com/Web3ProdigyDev"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit Web3ProdigyDev Facebook"
+            className="inline-block"
+          >
+            <BsFacebook className="w-6 h-6 text-white/50 hover:text-white duration-300 cursor-pointer" />
+          </a>
+          <a
+            href="https://github.com/Web3ProdigyDev"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit Web3ProdigyDev GitHub"
+            className="inline-block"
+          >
+            <BsGithub className="w-6 h-6 text-white/50 hover:text-white duration-300 cursor-pointer" />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/Web3ProdigyDev"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit Web3ProdigyDev LinkedIn"
+            className="inline-block"
+          >
+            <BsLinkedin className="w-6 h-6 text-white/50 hover:text-white duration-300 cursor-pointer" />
+          </a>
+          <a
+            href="https://twitter.com/Web3ProdigyDev"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit Web3ProdigyDev Twitter"
+            className="inline-block"
+          >
+            <BsTwitter className="w-6 h-6 text-white/50 hover:text-white duration-300 cursor-pointer" />
+          </a>
         </div>
       </div>
     </div>
