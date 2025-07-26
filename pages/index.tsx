@@ -6,7 +6,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { sanityClient, urlFor } from "../sanity";
 import { Post } from "../typings";
-import { useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 
 interface Props {
@@ -14,9 +15,6 @@ interface Props {
 }
 
 export default function Home({ posts }: Props) {
-  useEffect(() => {
-    console.log(posts);
-  }, [posts]);
 
   return (
     <div className="bg-mainBgColor text-textColor min-h-screen">
@@ -37,8 +35,21 @@ export default function Home({ posts }: Props) {
         </div>
         {/* ============ Banner-Bottom End here ======= */}
         {/* ============ Post Part Start here ========= */}
-        <div className="max-w-7xl mx-auto py-20 px-4 bg-mainBgColor text-textColor">
-          Posts will go here
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 gap-3 md:gap-6 py-6">
+          {
+            posts.map((post) => (
+              <Link key={post._id} href={`/post/${post.slug.current}`}> 
+                <div>
+                  <Image
+                    width={380}
+                    height={350}
+                    src={urlFor(post.mainImage).url()!}
+                    alt="images"
+                  />
+                </div>
+              </Link>
+            ))
+          }
         </div>
         {/* ============ Post Part End here =========== */}
         {/* ============ Footer Start here============= */}

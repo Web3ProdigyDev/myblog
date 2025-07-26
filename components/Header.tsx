@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import logoDark from "../public/images/logoDark.png";
+import logoLight from "../public/images/logoLight.png";
 import profileImg from "../public/images/user.png";
 
 const Header = () => {
@@ -9,7 +9,7 @@ const Header = () => {
       <div className="max-w-7xl h-full mx-auto flex justify-between items-center">
         <Link href="/">
           <div>
-            <Image width={60} height={60} src={logoDark} alt="Web3ProdigyDev logo" className="object-contain" />
+            <Image width={60} height={60} src={logoLight} alt="Web3ProdigyDev logo" className="object-contain" />
           </div>
         </Link>
         <nav>
@@ -33,15 +33,15 @@ const Header = () => {
         </nav>
         <div className="flex items-center gap-8 text-lg text-textColor">
           <div className="flex items-center gap-1">
-<div className="p-[2px] rounded-full border-[2px] border-primaryColor shadow-sm">
-  <Image
-    src={profileImg}
-    alt="profile"
-    width={40}
-    height={40}
-    className="rounded-full"
-  />
-</div>
+            <div className="p-[2px] rounded-full border-[2px] border-primaryColor shadow-sm">
+              <Image
+                src={profileImg}
+                alt="profile"
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
+            </div>
 
 
             <p className="text-sm font-medium">Hello Stranger!</p>
