@@ -4,8 +4,20 @@ import Banner from "../components/Banner";
 import BannerBottom from "../components/BannerBottom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { sanityClient, urlFor } from "../sanity";
+import { Post } from "../typings";
+import { useEffect } from "react";
 
-export default function Home() {
+
+interface Props {
+  posts: Post[]
+}
+
+export default function Home({ posts }: Props) {
+  useEffect(() => {
+    console.log(posts);
+  }, [posts]);
+
   return (
     <div className="bg-mainBgColor text-textColor min-h-screen">
       <Head>
@@ -36,3 +48,23 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const query = `*[_type == "post"]{
+  _id,
+    title,
+    author -> {
+      name, 
+      image
+    },
+  description,
+    mainImage,
+    slug
+}`;
+  const posts = await sanityClient.fetch(query);
+  return {
+    props: {
+      posts,
+    },
+  };
+};
