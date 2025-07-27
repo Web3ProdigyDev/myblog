@@ -12,13 +12,21 @@ module.exports = {
         titleFont: "Montserrat",
       },
       colors: {
-        primaryColor: "#e5e7eb", // Light gray for text/icons on dark background
-        secondaryColor: "#f6f15cff", // Vibrant purple for accents (hovers, buttons)
-        bgColor: "#1f2937", // Dark gray for backgrounds
-        textColor: "#d1d5db", // Light gray for body text
+        primaryColor: "#F3F4F6",       // Subtle off-white for text/icons
+        secondaryColor: "#8B5CF6",     // Elegant violet for accents, hover, buttons
+        bgColor: "#121212",            // True dark for backgrounds
+        textColor: "#E5E7EB",          // Gentle light gray for body text
+        mutedText: "#9CA3AF",          // Medium gray for secondary text
+        borderColor: "#2A2A2A",        // Soft border for inputs and cards
+
+        // Semantic feedback colors
+        danger: "#EF4444",             // Red for errors
+        success: "#10B981",            // Green for confirmations
+        warning: "#F59E0B",            // Yellow for alerts
       },
       boxShadow: {
-        btnShadow: "0px 0px 18px 3px rgba(139, 92, 246, 0.3)", // Purple-tinted shadow
+        btnShadow: "0 0 12px rgba(139, 92, 246, 0.25)",         // Soft violet button glow
+        glowInput: "0 1px 8px rgba(255, 255, 255, 0.08)",        // Subtle white glow for input focus
       },
     },
   },

@@ -6,20 +6,51 @@ import { sanityClient, urlFor } from '../../sanity'
 import { GetStaticProps } from 'next'
 import { type Post } from '../../typings'
 import { PortableText } from '@portabletext/react'
+import { useForm, SubmitHandler } from 'react-hook-form'
 
 interface Props {
     post: Post
 }
 
+type Inputs = {
+    _id: string;
+    name: string;
+    email: string;
+    comment: string;
+}
+
 const Post = ({ post }: Props) => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<Inputs>();
     const router = useRouter()
+
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        fetch('/api/createComment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        }).then(() => {
+            // setSubmitted(true);
+            alert('Comment submitted successfully!')
+            router.reload()
+        }).catch((error) => {
+            // setSubmitted(false);
+            console.error('Error submitting comment:', error)
+            alert('Failed to submit comment. Please try again later.')
+        })
+    }
 
     return (
         <>
             <Header />
 
             {/* Back Button */}
-            <div className='max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-4'>
+            <div className='max-w-3xl mx-auto mb-10 px-4 sm:px-6 lg:px-8 mt-4'>
                 <button
                     onClick={() => router.back()}
                     className='inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-cyan-800 hover:bg-cyan-900 rounded-md transition-colors duration-200'
@@ -122,17 +153,60 @@ const Post = ({ post }: Props) => {
                     </h3>
                     <hr className="p-3 mt-2" />
                     {/* Form will start here */}
-                    <form action="">
+                    {/* Generating Id for hooks form */}
+                    <input {...register("_id")}
+                        type="hidden"
+                        name='_id'
+                        value={post._id}
+                        className="hidden"
+                    />
+                    <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6" action="">
+                        {/* Name */}
                         <label className="flex flex-col">
-                            <span className="font-titleFont font-semibold text-base">
+                            <span className="font-titleFont font-semibold text-base mb-1 text-white">
                                 Name
                             </span>
                             <input
-                                className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
-                                type='text'
-                                placeholder='Enter your Name'
+                                {...register("name", { required: true })}
+                                type="text"
+                                placeholder="Enter your Name"
+                                className="bg-transparent border-b border-secondaryColor text-white placeholder:text-sm placeholder:text-gray-400 py-2 px-1 focus:outline-none focus:border-primary focus:shadow-[0_1px_6px_0_rgba(255,255,255,0.15)] transition-all duration-200"
                             />
                         </label>
+
+                        {/* Email */}
+                        <label className="flex flex-col">
+                            <span className="font-titleFont font-semibold text-base mb-1 text-white">
+                                Email
+                            </span>
+                            <input
+                                {...register("email", { required: true })}
+                                type="email"
+                                placeholder="Enter your Email"
+                                className="bg-transparent border-b border-secondaryColor text-white placeholder:text-sm placeholder:text-gray-400 py-2 px-1 focus:outline-none focus:border-primary focus:shadow-[0_1px_6px_0_rgba(255,255,255,0.15)] transition-all duration-200"
+                            />
+                        </label>
+
+                        {/* Comment */}
+                        <label className="flex flex-col">
+                            <span className="font-titleFont font-semibold text-base mb-1 text-white">
+                                Comment
+                            </span>
+                            <textarea
+                                {...register("comment", { required: true })}
+                                placeholder="Enter your Comment"
+                                rows={5}
+                                className="bg-transparent border-b border-secondaryColor text-white placeholder:text-sm placeholder:text-gray-400 py-2 px-1 focus:outline-none focus:border-primary focus:shadow-[0_1px_6px_0_rgba(255,255,255,0.15)] transition-all duration-200 resize-none"
+                            />
+                        </label>
+
+                        {/* Submit */}
+                        <button
+                            type="submit"
+                            className="w-full bg-bgColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-secondaryColor duration-300"
+                        >
+                            Submit
+                        </button>
                     </form>
                 </div>
             </div>
