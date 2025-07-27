@@ -13,7 +13,7 @@ module.exports = {
       },
       colors: {
         primaryColor: "#e5e7eb", // Light gray for text/icons on dark background
-        secondaryColor: "#8b5cf6", // Vibrant purple for accents (hovers, buttons)
+        secondaryColor: "#f6f15cff", // Vibrant purple for accents (hovers, buttons)
         bgColor: "#1f2937", // Dark gray for backgrounds
         textColor: "#d1d5db", // Light gray for body text
       },
