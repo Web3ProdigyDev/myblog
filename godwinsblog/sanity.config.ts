@@ -1,4 +1,5 @@
-import { defineConfig, deskTool } from 'sanity'
+import { defineConfig } from 'sanity'
+import { deskTool } from 'sanity/desk'
 import { visionTool } from '@sanity/vision'
 import { schema } from './sanity/schemaTypes'
 
