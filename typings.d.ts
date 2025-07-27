@@ -9,7 +9,7 @@ export interface Post {
         _ref: any;
         url: string;
       };
-      alt?: string; // Matches updated authorType schema
+      alt?: string;
     };
   };
   description: string;
@@ -18,18 +18,32 @@ export interface Post {
       _ref: any;
       url: string;
     };
-    alt?: string; // Matches postType schema
+    alt?: string;
   };
   slug: {
     current: string;
   };
-  body: Array<{
-    _type: string;
-    [key: string]: any;
-  }>; // Matches blockContentType
+  body: any[]; // PortableText blocks
   publishedAt: string | number | Date;
-  categories?: Array<{
+  categories?: {
     _id: string;
     title: string;
-  }>; // Matches postType schema
+  }[];
+  comments: Comment[]; // ✅ Add this
+}
+
+export interface Comment {
+  _id: string;
+  name: string;
+  email: string;
+  comment: string;
+  approved: boolean;
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  _type: string;
+  post: {
+    _ref: string;
+    _type: string;
+  };
 }
