@@ -6,6 +6,7 @@ export interface Post {
     name: string;
     image: {
       asset: {
+        _ref: any;
         url: string;
       };
       alt?: string; // Matches updated authorType schema
@@ -14,6 +15,7 @@ export interface Post {
   description: string;
   mainImage: {
     asset: {
+      _ref: any;
       url: string;
     };
     alt?: string; // Matches postType schema
