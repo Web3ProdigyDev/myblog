@@ -122,7 +122,18 @@ const Post = ({ post }: Props) => {
                     </h3>
                     <hr className="p-3 mt-2" />
                     {/* Form will start here */}
-                    <form action=""></form>
+                    <form action="">
+                        <label className="flex flex-col">
+                            <span className="font-titleFont font-semibold text-base">
+                                Name
+                            </span>
+                            <input
+                                className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
+                                type='text'
+                                placeholder='Enter your Name'
+                            />
+                        </label>
+                    </form>
                 </div>
             </div>
 
