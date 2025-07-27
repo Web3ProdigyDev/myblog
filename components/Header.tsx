@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import logoLight from "../public/images/logoLight.png";
 import profileImg from "../public/images/user.png";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const Header = () => {
   return (
@@ -47,7 +48,9 @@ const Header = () => {
             <p className="text-sm font-medium">Hello Stranger!</p>
           </div>
 
-          <button className="uppercase text-sm border-[1px] border-primaryColor hover:border-secondaryColor px-4 py-1 font-semibold text-primaryColor hover:text-bgColor rounded-md hover:bg-secondaryColor transition-all duration-300 active:bg-secondaryColor/80">
+          <button onClick={() => signIn()}
+            className="uppercase text-sm border-[1px] border-primaryColor hover:border-secondaryColor px-4 py-1 font-semibold text-primaryColor hover:text-bgColor rounded-md hover:bg-secondaryColor transition-all duration-300 active:bg-secondaryColor/80"
+          >
             Sign In
           </button>
         </div>
