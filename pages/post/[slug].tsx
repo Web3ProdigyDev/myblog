@@ -4,7 +4,7 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { sanityClient, urlFor } from '../../sanity'
 import { GetStaticProps } from 'next'
-import { Post } from '../../typings'
+import { type Post } from '../../typings'
 import { PortableText } from '@portabletext/react'
 
 interface Props {
@@ -32,7 +32,7 @@ const Post = ({ post }: Props) => {
             <img
                 className='w-full h-96 object-cover md:h-[500px] sm:h-80 xs:h-64'
                 src={urlFor(post.mainImage).url()}
-                alt={post.alt || post.title}
+                alt={post.mainImage.alt || post.title}
             />
 
             {/* Article */}
@@ -52,7 +52,7 @@ const Post = ({ post }: Props) => {
                             <img
                                 className='rounded-full w-12 h-12 object-cover'
                                 src={urlFor(post.author.image).url()}
-                                alt={post.author.alt || post.author.name}
+                                alt={post.title}
                             />
                             <p className='font-bodyFont text-sm text-gray-300'>
                                 Blog post by{' '}
@@ -112,6 +112,16 @@ const Post = ({ post }: Props) => {
                         />
                     </div>
                 </article>
+                <hr className='max-w-lg my-5 mx-auto border[1px] border-secondaryColor' />
+                <div>
+                    <p className="text-xs text-secondaryColor uppercase font-titleFont font-bold">
+                        Enjoy this article?
+                    </p>
+                    <h3 className="font-titleFont text-3xl font-bold">
+                        Leave a Comment below!
+                    </h3>
+                    <hr className="p-3 mt-2" />
+                </div>
             </div>
 
             <Footer />
@@ -148,16 +158,24 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     _id,
     title,
     author -> {
-      name, 
-      image,
-      alt
+      name,
+      image {
+        asset,
+        alt
+      }
     },
     description,
-    mainImage,
+    mainImage {
+      asset,
+      alt
+    },
     slug,
-    alt,
     body,
-    publishedAt
+    publishedAt,
+    categories[] -> {
+      _id,
+      title
+    }
   }`
 
     const post = await sanityClient.fetch(query, {

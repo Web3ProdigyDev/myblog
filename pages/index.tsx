@@ -33,18 +33,17 @@ export default function Home({ posts }: Props) {
           {posts.map((post) => (
             <Link key={post._id} href={`/post/${post.slug.current}`}>
               <div className="rounded-md overflow-hidden bg-[#1a1a1a] border border-gray-700 hover:border-[#00FFC3] shadow-md transition-transform duration-300 hover:scale-[1.015] hover:shadow-[0_0_12px_#00FFCB55] flex flex-col justify-between group cursor-pointer">
-
                 {/* IMAGE SECTION */}
                 <div className="w-full h-[220px] overflow-hidden image-container">
                   <Image
                     width={380}
                     height={350}
                     src={
-                      post.mainImage && urlFor(post.mainImage).url()
+                      post.mainImage?.asset?.url
                         ? urlFor(post.mainImage).url()!
                         : "/images/banner/nubelson-fernandes-jTpKCvH8A0E-unsplash.jpg"
                     }
-                    alt="blog image"
+                    alt={post.mainImage?.alt || post.title}
                     className="w-full h-full object-cover brightness-75 transition-transform duration-300 group-hover:scale-100 image-zoom"
                   />
                 </div>
@@ -62,11 +61,13 @@ export default function Home({ posts }: Props) {
                       <img
                         className="w-9 h-9 rounded-full object-cover"
                         src={
-                          post.author?.image
+                          post.author?.image?.asset?.url
                             ? urlFor(post.author.image).url()
                             : "/images/user.png"
                         }
-                        alt={post.author?.alt || post.author?.name || "Author image"}
+                        alt={post.author?.name || "Author image"}
+                        width={36}
+                        height={36}
                       />
                       <div>
                         <p className="text-sm font-medium">{post.author?.name}</p>
@@ -101,14 +102,18 @@ export const getServerSideProps = async () => {
     _id,
     title,
     author -> {
-      name, 
-      image,
-      alt
+      name,
+      image {
+        asset,
+        alt
+      }
     },
     description,
-    mainImage,
+    mainImage {
+      asset,
+      alt
+    },
     slug,
-    alt,
     publishedAt
   }`;
 
