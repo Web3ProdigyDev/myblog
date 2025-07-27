@@ -14,7 +14,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@sanity/vision": "^3.62.0",
+    "@sanity/vision": "^3.99.0",
     "sanity": "^3.62.0",
     "styled-components": "^6.1.13"
   },

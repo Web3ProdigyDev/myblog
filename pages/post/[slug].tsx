@@ -121,6 +121,7 @@ const Post = ({ post }: Props) => {
                         Leave a Comment below!
                     </h3>
                     <hr className="p-3 mt-2" />
+                    {/* Form will  */}
                 </div>
             </div>
 
