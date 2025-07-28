@@ -14,7 +14,7 @@ const Header = () => {
   // Detect viewport changes
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)"); // lg breakpoint
-    const handleResize = (e) => setIsDesktop(e.matches);
+    const handleResize = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
     mediaQuery.addEventListener("change", handleResize);
     setIsDesktop(mediaQuery.matches); // Set initial value
     return () => mediaQuery.removeEventListener("change", handleResize);
