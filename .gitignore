@@ -37,7 +37,7 @@ next-env.d.ts
 
 # sanity
 /godwinsblog/node_modules
-.env*
+.env
 .flaskenv*
 !.env.project
 !.env.vault

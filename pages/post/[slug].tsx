@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -7,6 +7,8 @@ import { GetStaticProps } from "next";
 import { type Post } from "../../typings";
 import { PortableText } from "@portabletext/react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useSession, signIn } from "next-auth/react";
+import Image from "next/image";
 
 interface Props {
     post: Post;
@@ -20,29 +22,67 @@ type Inputs = {
 };
 
 const Post = ({ post }: Props) => {
+    const { data: session } = useSession();
+    const [userErr, setUserErr] = React.useState<string | null>(null);
+    const [submitted, setSubmitted] = useState(false); // Tracks individual submission
+    const commentSectionRef = useRef<HTMLDivElement>(null);
+
     const {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm<Inputs>();
     const router = useRouter();
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
-        fetch("/api/createComment", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then(() => {
-                alert("Comment submitted successfully!");
-                router.reload();
-            })
-            .catch((error) => {
-                console.error("Error submitting comment:", error);
-                alert("Failed to submit comment. Please try again later.");
+        if (!session) {
+            setUserErr("Please sign in to submit a comment.");
+            if (commentSectionRef.current) {
+                commentSectionRef.current.scrollIntoView({ behavior: "smooth" });
+            }
+            return;
+        }
+
+        try {
+            const response = await fetch("/api/createComment", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
             });
+
+            if (!response.ok) throw new Error("Failed to submit comment");
+            setSubmitted(true); // Set submitted to true on success
+            alert("Comment submitted successfully!");
+            reset();
+            // router.reload(); // Optional: Remove if you don't want a full reload
+        } catch (error) {
+            console.error("Error submitting comment:", error);
+            setUserErr("Failed to submit comment. Please try again later.");
+            if (commentSectionRef.current) {
+                commentSectionRef.current.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+    };
+
+    const handleFieldClick = () => {
+        if (!session) {
+            setUserErr("You must sign in to leave a comment!");
+            if (commentSectionRef.current) {
+                commentSectionRef.current.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+    };
+
+    const handleUserErr = () => {
+        if (!session) {
+            setUserErr("You must sign in to leave a comment!");
+            if (commentSectionRef.current) {
+                commentSectionRef.current.scrollIntoView({ behavior: "smooth" });
+            }
+        }
     };
 
     return (
@@ -54,16 +94,20 @@ const Post = ({ post }: Props) => {
                 <button
                     onClick={() => router.back()}
                     className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 text-sm font-medium text-white bg-cyan-800 hover:bg-cyan-900 rounded-md transition-colors duration-200"
+                    aria-label="Go back"
                 >
                     ← Back
                 </button>
             </div>
 
             {/* Main Image */}
-            <img
+            <Image
                 className="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] object-cover"
                 src={urlFor(post.mainImage).url()}
                 alt={post.mainImage.alt || post.title}
+                width={1200}
+                height={500}
+                priority
             />
 
             {/* Article */}
@@ -80,10 +124,12 @@ const Post = ({ post }: Props) => {
                     {/* Author and Date */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
                         <div className="flex items-center gap-3">
-                            <img
+                            <Image
                                 className="rounded-full w-10 h-10 sm:w-12 sm:h-12 object-cover"
                                 src={urlFor(post.author.image).url()}
-                                alt={post.title}
+                                alt={post.author.name || post.title}
+                                width={48}
+                                height={48}
                             />
                             <p className="font-bodyFont text-sm text-gray-300">
                                 Blog post by{" "}
@@ -144,7 +190,7 @@ const Post = ({ post }: Props) => {
                     </div>
                 </article>
                 <hr className="max-w-lg my-5 mx-auto border-[1px] border-secondaryColor" />
-                <div>
+                <div ref={commentSectionRef}>
                     <p className="text-xs text-secondaryColor uppercase font-titleFont font-bold">
                         Enjoy this article?
                     </p>
@@ -175,7 +221,12 @@ const Post = ({ post }: Props) => {
                                 type="text"
                                 placeholder="Enter your Name"
                                 className="bg-transparent border-b border-secondaryColor text-white placeholder:text-xs sm:placeholder:text-sm placeholder:text-gray-400 py-2 px-1 focus:outline-none focus:border-primary focus:shadow-[0_1px_6px_0_rgba(255,255,255,0.15)] transition-all duration-200"
+                                onClick={handleFieldClick}
+                                disabled={!session}
                             />
+                            {errors.name && (
+                                <span className="text-red-500 text-xs mt-1">Name is required</span>
+                            )}
                         </label>
 
                         {/* Email */}
@@ -188,7 +239,12 @@ const Post = ({ post }: Props) => {
                                 type="email"
                                 placeholder="Enter your Email"
                                 className="bg-transparent border-b border-secondaryColor text-white placeholder:text-xs sm:placeholder:text-sm placeholder:text-gray-400 py-2 px-1 focus:outline-none focus:border-primary focus:shadow-[0_1px_6px_0_rgba(255,255,255,0.15)] transition-all duration-200"
+                                onClick={handleFieldClick}
+                                disabled={!session}
                             />
+                            {errors.email && (
+                                <span className="text-red-500 text-xs mt-1">Email is required</span>
+                            )}
                         </label>
 
                         {/* Comment */}
@@ -201,17 +257,55 @@ const Post = ({ post }: Props) => {
                                 placeholder="Enter your Comment"
                                 rows={4}
                                 className="bg-transparent border-b border-secondaryColor text-white placeholder:text-xs sm:placeholder:text-sm placeholder:text-gray-400 py-2 px-1 focus:outline-none focus:border-primary focus:shadow-[0_1px_6px_0_rgba(255,255,255,0.15)] transition-all duration-200 resize-none"
+                                onClick={handleFieldClick}
+                                disabled={!session}
                             />
+                            {errors.comment && (
+                                <span className="text-red-500 text-xs mt-1">Comment is required</span>
+                            )}
                         </label>
 
                         {/* Submit */}
-                        <button
-                            type="submit"
-                            className="w-full bg-bgColor text-white text-sm sm:text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-secondaryColor duration-300"
-                        >
-                            Submit
-                        </button>
+                        {session && (
+                            <button
+                                type="submit"
+                                className="w-full bg-bgColor text-white text-sm sm:text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-secondaryColor duration-300"
+                            >
+                                Submit
+                            </button>
+                        )}
                     </form>
+                    {submitted && (
+                        <div className="flex flex-col items-center gap-2 p-4 my-4 bg-bgColor text-white mx-auto">
+                            <h1 className="text-2xl font-bold">Thank you for submitting your comment!</h1>
+                            <p>Once it has been approved, it will appear below!</p>
+                        </div>
+                    )}
+                    {!session && (
+                        <button
+                            onClick={handleUserErr}
+                            className="w-full bg-bgColor text-white text-sm sm:text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-secondaryColor duration-300 mt-4"
+                        >
+                            Sign in to leave a comment
+                        </button>
+                    )}
+                    {userErr && (
+                        <>
+                            <p
+                                className="text-sm font-titleFont text-center font-semibold text-red-500 underline underline-offset-2 my-2 px-4 animate-bounce"
+                                role="alert"
+                            >
+                                <span className="text-base font-bold italic mr-2">!</span>
+                                {userErr}
+                            </p>
+                            <button
+                                onClick={() => signIn("google")} // Specify Google provider
+                                className="w-full bg-bgColor text-white text-sm sm:text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-secondaryColor duration-300 mt-2"
+                            >
+                                Sign In
+                            </button>
+                        </>
+                    )}
                     {/* Comments Section */}
                     <div className="w-full flex flex-col p-6 sm:p-10 my-8 sm:my-10 mx-auto shadow-bgColor shadow-lg space-y-2">
                         <h3 className="text-2xl sm:text-3xl font-titleFont font-semibold">

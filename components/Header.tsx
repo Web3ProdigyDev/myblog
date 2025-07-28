@@ -3,12 +3,26 @@ import Link from "next/link";
 import logoLight from "../public/images/logoLight.png";
 import profileImg from "../public/images/user.png";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Header = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const user = session?.user;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Detect viewport changes
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)"); // lg breakpoint
+    const handleResize = (e) => setIsDesktop(e.matches);
+    mediaQuery.addEventListener("change", handleResize);
+    setIsDesktop(mediaQuery.matches); // Set initial value
+    return () => mediaQuery.removeEventListener("change", handleResize);
+  }, []);
+
+  const handleSignIn = async () => {
+    await signIn("google", { callbackUrl: window.location.href });
+  };
 
   return (
     <div className="w-full h-20 border-b-[1px] border-b-primaryColor/30 bg-bgColor text-textColor font-titleFont sticky top-0 z-50 px-4 shadow-sm">
@@ -25,7 +39,7 @@ const Header = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex">
+        <nav className={`hidden ${isDesktop ? "lg:flex" : "lg:hidden"}`}>
           <ul className="flex gap-8 uppercase text-sm font-semibold">
             <li className="headerLi">
               <Link href="/">Home</Link>
@@ -47,7 +61,7 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="lg:hidden flex items-center"
+          className={`lg:hidden flex items-center ${isDesktop ? "hidden" : "block"}`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -69,7 +83,7 @@ const Header = () => {
 
         {/* Mobile Navigation Menu */}
         <div
-          className={`lg:hidden absolute top-20 left-0 w-full bg-bgColor border-b border-primaryColor/30 transition-all duration-300 ease-in-out ${isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+          className={`lg:hidden absolute top-20 left-0 w-full bg-bgColor border-b border-primaryColor/30 transition-all duration-300 ease-in-out ${isMenuOpen && !isDesktop ? "opacity-100 visible" : "opacity-0 invisible"
             }`}
         >
           <ul className="flex flex-col items-center gap-4 py-4 uppercase text-sm font-semibold">
@@ -120,14 +134,14 @@ const Header = () => {
 
           {session ? (
             <button
-              onClick={() => signOut()}
+              onClick={() => signOut({ callbackUrl: "/" })}
               className="uppercase text-xs sm:text-sm border-[1px] border-primaryColor hover:border-secondaryColor px-3 sm:px-4 py-1 font-semibold text-primaryColor hover:text-bgColor rounded-md hover:bg-secondaryColor transition-all duration-300 active:bg-secondaryColor/80"
             >
               Sign Out
             </button>
           ) : (
             <button
-              onClick={() => signIn()}
+              onClick={handleSignIn}
               className="uppercase text-xs sm:text-sm border-[1px] border-primaryColor hover:border-secondaryColor px-3 sm:px-4 py-1 font-semibold text-primaryColor hover:text-bgColor rounded-md hover:bg-secondaryColor transition-all duration-300 active:bg-secondaryColor/80"
             >
               Sign In

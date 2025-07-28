@@ -7,13 +7,19 @@ module.exports = {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
         port: "",
-        pathname: "/a/**", // Matches Google profile image paths (e.g., /a/ACg8ocIl...)
+        pathname: "/a/**",
       },
       {
         protocol: "https",
-        hostname: "cdn.sanity.io",
+        hostname: "**", // Wildcard to match any Sanity CDN subdomain
         port: "",
-        pathname: "/images/**", // Matches Sanity image paths
+        pathname: "/images/**",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+        pathname: "/u/**",
       },
     ],
   },
