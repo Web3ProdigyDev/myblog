@@ -18,17 +18,17 @@ function SampleNextArrow(props: any) {
   const { onClick } = props;
   return (
     <div
-      className="w-44 h-8 absolute bottom-32 z-30 right-10 border border-gray-900 px-2 hover:border-gray-800 bg-black/50 hover:bg-black shadow-btnShadow overflow-hidden"
+      className="w-24 sm:w-32 md:w-44 h-6 sm:h-7 md:h-8 absolute bottom-4 sm:bottom-8 md:bottom-32 z-30 right-2 sm:right-4 md:right-10 border border-gray-900 px-1 sm:px-2 hover:border-gray-800 bg-black/50 hover:bg-black shadow-btnShadow overflow-hidden"
       onClick={onClick}
     >
-      <div className="w-full h-full text-gray-300 text-sm uppercase relative flex items-center justify-end cursor-pointer group">
-        <span className="absolute -translate-x-28 translate-y-0 group-hover:-translate-y-7 transition-transform duration-500">
+      <div className="w-full h-full text-gray-300 text-xs sm:text-sm uppercase relative flex items-center justify-end cursor-pointer group">
+        <span className="absolute -translate-x-16 sm:-translate-x-20 md:-translate-x-28 translate-y-0 group-hover:-translate-y-7 transition-transform duration-500">
           next
         </span>
-        <span className="absolute -translate-x-28 translate-y-7 group-hover:translate-y-0 transition-transform duration-500">
+        <span className="absolute -translate-x-16 sm:-translate-x-20 md:-translate-x-28 translate-y-7 group-hover:translate-y-0 transition-transform duration-500">
           next
         </span>
-        <span className="text-lg">
+        <span className="text-base sm:text-lg">
           <FaChevronRight />
         </span>
       </div>
@@ -41,17 +41,17 @@ function SamplePrevArrow(props: any) {
   const { onClick } = props;
   return (
     <div
-      className="w-44 h-8 absolute bottom-32 z-30 left-10 border border-gray-900 px-2 hover:border-gray-800 bg-black/50 hover:bg-black shadow-btnShadow overflow-hidden"
+      className="w-24 sm:w-32 md:w-44 h-6 sm:h-7 md:h-8 absolute bottom-4 sm:bottom-8 md:bottom-32 z-30 left-2 sm:left-4 md:left-10 border border-gray-900 px-1 sm:px-2 hover:border-gray-800 bg-black/50 hover:bg-black shadow-btnShadow overflow-hidden"
       onClick={onClick}
     >
-      <div className="w-full h-full text-gray-300 text-sm uppercase relative flex items-center justify-between cursor-pointer group">
-        <span className="text-lg">
+      <div className="w-full h-full text-gray-300 text-xs sm:text-sm uppercase relative flex items-center justify-between cursor-pointer group">
+        <span className="text-base sm:text-lg">
           <FaChevronLeft />
         </span>
-        <span className="absolute translate-x-24 translate-y-0 group-hover:-translate-y-7 transition-transform duration-500">
+        <span className="absolute translate-x-16 sm:translate-x-20 md:translate-x-24 translate-y-0 group-hover:-translate-y-7 transition-transform duration-500">
           previous
         </span>
-        <span className="absolute translate-x-24 translate-y-7 group-hover:translate-y-0 transition-transform duration-500">
+        <span className="absolute translate-x-16 sm:translate-x-20 md:translate-x-24 translate-y-7 group-hover:translate-y-0 transition-transform duration-500">
           previous
         </span>
       </div>
@@ -74,23 +74,38 @@ const Banner = () => {
   const settings = {
     dots: false,
     infinite: true,
-    fade: true, // smooth fade transition
-    speed: 1000, // animation speed in ms
+    fade: true,
+    speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true, // enable autoplay
-    autoplaySpeed: 5000, // wait 5 seconds before changing
+    autoplay: true,
+    autoplaySpeed: 5000,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 640, // sm
+        settings: {
+          arrows: true,
+          autoplaySpeed: 4000, // Faster autoplay on mobile
+        },
+      },
+      {
+        breakpoint: 768, // md
+        settings: {
+          arrows: true,
+        },
+      },
+    ],
   };
 
   return (
-    <div className="w-full h-auto md:h-[650px] relative">
+    <div className="w-full h-auto sm:h-96 md:h-[500px] lg:h-[650px] relative">
       <Slider {...settings}>
         {images.map((img, index) => (
           <div key={index}>
             <Image
-              className="w-full h-auto md:h-[650px] object-cover"
+              className="w-full h-64 sm:h-96 md:h-[500px] lg:h-[650px] object-cover"
               src={img.src}
               alt={img.alt}
               placeholder="blur"

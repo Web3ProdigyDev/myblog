@@ -3,10 +3,12 @@ import Link from "next/link";
 import logoLight from "../public/images/logoLight.png";
 import profileImg from "../public/images/user.png";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useState } from "react";
 
 const Header = () => {
   const { data: session } = useSession();
   const user = session?.user;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div className="w-full h-20 border-b-[1px] border-b-primaryColor/30 bg-bgColor text-textColor font-titleFont sticky top-0 z-50 px-4 shadow-sm">
@@ -22,8 +24,9 @@ const Header = () => {
           />
         </Link>
 
-        <nav>
-          <ul className="hidden lg:inline-flex gap-8 uppercase text-sm font-semibold">
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex">
+          <ul className="flex gap-8 uppercase text-sm font-semibold">
             <li className="headerLi">
               <Link href="/">Home</Link>
             </li>
@@ -42,7 +45,64 @@ const Header = () => {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-8 text-lg text-textColor">
+        {/* Mobile Menu Button */}
+        <button
+          className="lg:hidden flex items-center"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
+            />
+          </svg>
+        </button>
+
+        {/* Mobile Navigation Menu */}
+        <div
+          className={`lg:hidden absolute top-20 left-0 w-full bg-bgColor border-b border-primaryColor/30 transition-all duration-300 ease-in-out ${isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+            }`}
+        >
+          <ul className="flex flex-col items-center gap-4 py-4 uppercase text-sm font-semibold">
+            <li className="headerLi">
+              <Link href="/" onClick={() => setIsMenuOpen(false)}>
+                Home
+              </Link>
+            </li>
+            <li className="headerLi">
+              <Link href="/posts" onClick={() => setIsMenuOpen(false)}>
+                Posts
+              </Link>
+            </li>
+            <li className="headerLi">
+              <Link href="/pages" onClick={() => setIsMenuOpen(false)}>
+                Pages
+              </Link>
+            </li>
+            <li className="headerLi">
+              <Link href="/features" onClick={() => setIsMenuOpen(false)}>
+                Features
+              </Link>
+            </li>
+            <li className="headerLi">
+              <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
+                Contact
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* User Section */}
+        <div className="flex items-center gap-4 text-lg text-textColor">
           <div className="flex items-center gap-2">
             <div className="p-[2px] rounded-full border-[2px] border-primaryColor shadow-sm">
               <Image
@@ -53,7 +113,7 @@ const Header = () => {
                 className="rounded-full object-cover"
               />
             </div>
-            <p className="text-sm font-medium">
+            <p className="text-sm font-medium hidden sm:block">
               {user?.name || user?.email || "Hello Stranger!"}
             </p>
           </div>
@@ -61,14 +121,14 @@ const Header = () => {
           {session ? (
             <button
               onClick={() => signOut()}
-              className="uppercase text-sm border-[1px] border-primaryColor hover:border-secondaryColor px-4 py-1 font-semibold text-primaryColor hover:text-bgColor rounded-md hover:bg-secondaryColor transition-all duration-300 active:bg-secondaryColor/80"
+              className="uppercase text-xs sm:text-sm border-[1px] border-primaryColor hover:border-secondaryColor px-3 sm:px-4 py-1 font-semibold text-primaryColor hover:text-bgColor rounded-md hover:bg-secondaryColor transition-all duration-300 active:bg-secondaryColor/80"
             >
               Sign Out
             </button>
           ) : (
             <button
               onClick={() => signIn()}
-              className="uppercase text-sm border-[1px] border-primaryColor hover:border-secondaryColor px-4 py-1 font-semibold text-primaryColor hover:text-bgColor rounded-md hover:bg-secondaryColor transition-all duration-300 active:bg-secondaryColor/80"
+              className="uppercase text-xs sm:text-sm border-[1px] border-primaryColor hover:border-secondaryColor px-3 sm:px-4 py-1 font-semibold text-primaryColor hover:text-bgColor rounded-md hover:bg-secondaryColor transition-all duration-300 active:bg-secondaryColor/80"
             >
               Sign In
             </button>

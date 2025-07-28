@@ -24,12 +24,12 @@ export default function Home({ posts }: Props) {
       <main className="font-bodyFont">
         <Header />
         <Banner />
-        <div className="max-w-7xl mx-auto h-60 relative">
+        <div className="max-w-7xl mx-auto h-60 sm:h-72 md:h-80 relative px-4">
           <BannerBottom />
         </div>
 
         {/* Posts */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-8 px-4">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-6 px-4 sm:px-6">
           {posts.map((post) => (
             <Link
               key={post._id}
@@ -37,9 +37,8 @@ export default function Home({ posts }: Props) {
               className="group"
             >
               <div className="rounded-md overflow-hidden bg-[#1a1a1a] border border-gray-700 hover:border-[#00FFC3] shadow-md transition-all duration-300 hover:shadow-[0_0_12px_#00FFCB55] hover:scale-[1.015] flex flex-col justify-between cursor-pointer">
-
                 {/* Image */}
-                <div className="w-full h-[220px] overflow-hidden image-container">
+                <div className="w-full h-48 sm:h-56 md:h-64 overflow-hidden image-container">
                   <Image
                     width={380}
                     height={350}
@@ -56,10 +55,10 @@ export default function Home({ posts }: Props) {
                 {/* Content */}
                 <div className="p-4 flex flex-col justify-between flex-grow">
                   <div>
-                    <h2 className="text-lg font-semibold mb-2 text-white">
+                    <h2 className="text-base sm:text-lg font-semibold mb-2 text-white">
                       {post.title}
                     </h2>
-                    <p className="text-sm text-gray-300 line-clamp-3">
+                    <p className="text-xs sm:text-sm text-gray-300 line-clamp-3">
                       {post.description}
                     </p>
                   </div>
@@ -68,7 +67,7 @@ export default function Home({ posts }: Props) {
                   <div className="border-t border-secondaryColor border-opacity-30 pt-3 mt-4 flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <Image
-                        className="w-9 h-9 rounded-full object-cover"
+                        className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover"
                         src={
                           post.author?.image?.asset?._ref
                             ? urlFor(post.author.image).url()
@@ -78,7 +77,7 @@ export default function Home({ posts }: Props) {
                         width={36}
                         height={36}
                       />
-                      <p className="text-sm font-medium text-white">
+                      <p className="text-xs sm:text-sm font-medium text-white">
                         {post.author?.name}
                       </p>
                     </div>
