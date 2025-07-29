@@ -11,10 +11,10 @@ export const comment = defineType({
       type: "string",
     }),
     defineField({
-        name: "Approved",
-        title: "approved",
-        type: "boolean",
-        description: "Comments wont show on the site until approved",
+      name: "approved", // Changed to lowercase for consistency
+      title: "Approved",
+      type: "boolean",
+      description: "Comments won't show on the site until approved",
     }),
     defineField({
       name: "email",

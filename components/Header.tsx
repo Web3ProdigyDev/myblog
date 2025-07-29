@@ -21,7 +21,7 @@ const Header = () => {
   }, []);
 
   const handleSignIn = async () => {
-    await signIn("google", { callbackUrl: window.location.href });
+    await signIn(undefined, { callbackUrl: window.location.href });
   };
 
   return (
