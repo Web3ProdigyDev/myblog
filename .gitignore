@@ -40,4 +40,6 @@ next-env.d.ts
 .env
 .flaskenv*
 !.env.project
-!.env.vault
+!.env.
+
+/godwinsblog/.env
